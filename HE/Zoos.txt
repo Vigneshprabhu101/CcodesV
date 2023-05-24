@@ -1,0 +1,23 @@
+code:
+
+#include <stdio.h>
+
+int main(){
+	char zoo[100];
+	int nz=0;
+	scanf("%s", zoo);
+	for(int i=0;i<strlen(zoo);i++)
+	{
+		if(zoo[i]== 'z')
+			nz++;
+	}
+	if((2*nz)==(strlen(zoo)-nz))
+		printf("Yes");
+	else 
+		printf("No");
+return 0;
+}
+
+
+
+
