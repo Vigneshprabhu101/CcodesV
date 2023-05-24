@@ -28,5 +28,32 @@ int main(void)
 }
 
 
-Explanation: 
+Explanation:
+To form digits on a seven-segment display, a certain number of sticks are required. That are given below:
+0 requires 6 sticks
+1 --> 2 
+2 --> 5 
+3 --> 5 
+4 --> 4 
+5 --> 5 
+6 --> 6 
+7 --> 3 
+8 --> 7 
+9 --> 6 
+
+In the code, we have stored sticks requirements array 'a'.
+
+To create the maximum number using the available sticks, we need to select digits that require the minimum number of sticks. From the table above, we can see that the digit 1 requires 2 sticks, and the digit 7 requires 3 sticks.
+For each test case 't', the code calculates the total number of sticks required to form the given number using the formula:
+sum += a[(n[i] - 48)].
+(Note: Since the input numbers are received as strings (using the string data type) and each character is represented as ASCII, we can convert the character 'n' to its corresponding numeric value by subtracting 48 (the ASCII value of '0') from it. This gives us the index to access the stick requirement from the array 'a'. )
+
+After getting available sticks to form a maximum number in seven segment format, we will be using the below logic,
+
+* If the sum of required sticks is odd, the code prints the digit 7 (which requires 3 sticks). Otherwise, it prints the digit 1 (which requires 2 sticks).
+
+* After that, the code continuously divides 'sum' by 2 and prints the digit 1 on each iteration until 'sum' becomes 0. This ensures that the maximum number possible is formed using the available sticks.
+
+With this approach, we get a maximum number that can be formed using available sticks for each case 't' in seven segment format. 
+
 
