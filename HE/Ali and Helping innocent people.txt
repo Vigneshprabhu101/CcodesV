@@ -1,0 +1,23 @@
+C code: 
+
+#include <stdio.h>
+
+int main()
+{
+	char tag[9];
+	int s1,s2,s3,s4;
+	scanf("%s",tag);
+	s1=tag[0]+tag[1];
+	s2=tag[3]+tag[4];
+	s3=tag[4]+tag[5];
+	s4=tag[7]+tag[8];
+	if(tag[2]=='A' || tag[2]=='E' || tag[2]=='I' || tag[2]=='O' || tag[2]=='U' || tag[2]=='Y')
+		printf("invalid");
+	else if(s1%2!=0 || s2%2!=0 || s3%2!=0 || s4%2!=0)
+		printf("invalid");
+	else
+		printf("valid");
+return 0;
+}
+
+

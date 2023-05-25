@@ -1,4 +1,4 @@
-code:
+ C Code:
 
 #include <stdio.h>
 
