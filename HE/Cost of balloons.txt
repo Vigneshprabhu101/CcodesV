@@ -1,0 +1,40 @@
+C code:
+
+#include <stdio.h>
+
+int main()
+{
+	int t=0;
+	int g=0,p=0;
+	int n,data[10][2],sum1,sum2;
+	scanf("%d",&t);
+	while(t--)
+	{
+		sum1=sum2=0;
+		scanf("%d%d",&g,&p);
+		scanf("%d",&n);
+		for(int i=0;i<n;i++)
+		{
+			for(int j=0;j<2;j++)
+				scanf("%d",&data[i][j]);
+		}
+		for(int i=0;i<n;i++)
+		{
+			if(data[i][0]==1)
+				sum1+=g;
+			if(data[i][1]==1)
+				sum1+=p;
+		}
+		for(int i=0;i<n;i++)
+		{
+			if(data[i][0]==1)
+				sum2+=p;
+			if(data[i][1]==1)
+				sum2+=g;
+		}
+		printf("%d\n",sum1>sum2?sum2:sum1);
+	}
+
+return 0;
+
+}
