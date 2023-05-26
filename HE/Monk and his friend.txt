@@ -1,0 +1,27 @@
+C Codes:
+
+#include <stdio.h>
+int bittDiff(unsigned long long int m, unsigned long long int n)
+{
+    unsigned long long int bitSame = m ^ n;
+    int count = 0;
+    while (bitSame > 0)
+    {
+        count += bitSame & 1;
+        bitSame >>= 1;
+    }
+    return count;
+}
+int main()
+{
+    int t = 0;
+    scanf("%d", &t);
+    while (t--)
+    {
+        unsigned long long int m = 0, n = 0;
+        scanf("%llu%llu", &m, &n);
+        int diff = bittDiff(m, n);
+        printf("%d\n", diff);
+    }
+    return 0;
+}
