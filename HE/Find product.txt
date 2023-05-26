@@ -1,0 +1,15 @@
+C codes:
+
+#include <stdio.h>
+
+int main(){
+	int n;
+	scanf("%d",&n);
+	unsigned long long int num[1000000];
+	for(int i=0;i<n;i++)
+		scanf("%llu",&num[i]);
+	unsigned long long int  total=1;
+	for(int i=0;i<n;i++)
+		total=(total*num[i])%(1000000000+7);
+	printf("%llu",total);
+}
