@@ -1,0 +1,20 @@
+C Code:
+
+#include <stdio.h>
+#include <math.h>
+int main(){
+	int t, i;
+	long long int n, sq,ans;
+	scanf("%d\n", &t);
+	while(t--)
+	{	ans = 0;
+		scanf("%llu\n", &n);
+		sq = sqrt(n);
+		for(i=1;i<=sq;i++)
+		{
+			ans += 2*(n/i);
+		}
+		
+		printf("%llu\n", ans-sq*sq);
+	}       
+}

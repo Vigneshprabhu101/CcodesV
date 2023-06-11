@@ -1,0 +1,48 @@
+C code:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#define pcx putchar_unlocked
+#define gcx getchar_unlocked
+typedef long int lint;
+lint getli (void);
+void putli (lint n, char lc);
+ 
+inline lint getli () {
+    lint n =0;
+    int c = gcx();
+    while(c<'0' || c>'9') c = gcx();
+    while(c>='0' && c<='9') {
+        n = n * 10 + c-'0';
+        c = gcx();
+    } return n;
+}
+inline void putli (lint n, char lc) {
+    if (!n) {
+        pcx('0'); if(lc) pcx(lc); return;
+    }
+    char s[24]; lint rdi =0;
+    while (n) {
+        s[rdi++] = '0' + n % 10;
+        n /= 10;
+    }
+    while (rdi) pcx(s[--rdi]);
+    if(lc) pcx(lc);
+}
+ 
+int main () {
+    lint T = getli() +1;
+    while(--T) {
+        lint N = getli();
+        lint ans = 1;
+        lint X = getli();       // first
+        while (--N) {
+            lint Y = getli();   // second
+            if (Y < X) ++ans;
+            X = Y;
+        }
+        putli(ans, '\n');
+    }
+    return 0;
+}

@@ -1,0 +1,183 @@
+C Code:
+
+#include <stdio.h>
+#include <string.h>
+#define MAXSIZE 100000
+ 
+/*void print_array(int myarray[MAXSIZE], int a_size);*/
+void print_array_l(long myarray[MAXSIZE], int a_size);
+/*void bubble_sort(int size_n);*/
+/*void copy_string(char arr1[MAXSIZE], char arr2[MAXSIZE]);*/
+/*void mergeSort(char arr[MAXSIZE] [MAXSTRING], int l, int r);*/
+/*void merge(char arr[MAXSIZE] [MAXSTRING], int l, int m, int r);*/
+long find_max(long arr[], int n);
+void countingSort(long arr[], int n, long pos);
+void radixsort(long arr[], int n);
+/*long get_special_num(long start_num);*/
+long get_min_updates(void);
+void print_blacklist(long myarray[MAXSIZE]);
+ 
+/char L[(MAXSIZE / 2) + 1] [MAXSTRING]; //for merge sort function/
+/char R[(MAXSIZE / 2) + 1] [MAXSTRING]; //for merge sort function/
+long result[MAXSIZE + 1]; // for counting sort function 
+long count[10]; // for counting sort function 
+long input_array[MAXSIZE];
+long blacklist[MAXSIZE];
+ 
+unsigned char test_cases;
+int size_n;
+long k_integer;
+ 
+int main(int argc, char **argv)
+{
+	scanf("%hhd", &test_cases);
+	for (unsigned char i = 0; i < test_cases; ++i) {
+		scanf("%d", &size_n);
+		for (int j = 0; j < size_n; ++j) {
+			scanf("%ld", &input_array[j]);
+		}
+		scanf("%ld", &k_integer);
+		/*print_array_l(input_array, size_n);*/
+		radixsort(input_array, size_n);
+		/*print_array_l(input_array, size_n);*/
+		printf("%ld\n", get_min_updates());
+	}
+	return 0;
+}
+ 
+long get_min_updates(void) {
+	if (size_n % 2 != 0) {
+		return -1;
+	}
+	long answer;
+	int look_odd;
+	int look_even;
+	int odd = 0;
+	int even = 0;
+	int black_index = 0;
+	memset(blacklist, 0, sizeof(blacklist));
+	for (int i = 0; i < size_n - 1; ++i) {
+		if (input_array[i] != input_array[i + 1]) {
+			blacklist[black_index++] = input_array[i];
+			if (input_array[i] % 2 == 0) {
+				++even;
+			}
+			else {
+				++odd;
+			}
+		}
+	}
+	if (input_array[size_n - 1] % 2 == 0) {
+		blacklist[black_index++] = input_array[size_n - 1];
+		++even;
+	}
+	else {
+		blacklist[black_index++] = input_array[size_n - 1];
+		++odd;
+	}
+	/*printf("%d\n", odd);*/
+	/*printf("%d\n", even);*/
+	/*print_blacklist(blacklist);*/
+	look_odd = (size_n / 2) - odd;
+	look_even = (size_n / 2) - even;
+	if (look_odd < 0) {
+		look_odd = 0;
+	}
+	if (look_even < 0) {
+		look_even = 0;
+	}
+	if (look_odd == 0 && look_even == 0) {
+		return 0;
+	}
+	answer = look_odd + look_even;
+	unsigned char trigger;
+	int last_index = 0;
+	for (int i = 1; i <= k_integer; ++i) {
+		trigger = 1;
+		for (int j = last_index; blacklist[j] != 0 && blacklist[j] <= i; ++j) {
+			if (i == blacklist[j]) {
+				last_index = j;
+				trigger = 0;
+				break;
+			}
+		}
+		if (trigger == 1) {
+			if (i % 2 == 0) {
+				--look_even;
+			}
+			else {
+				--look_odd;
+			}
+		}
+		if (look_even <= 0 && look_odd <= 0) {
+			return answer;
+		}
+	}
+	return -1;
+}
+ 
+void print_blacklist(long myarray[MAXSIZE]) {
+	for (int i = 0; myarray[i] != 0; ++i) {
+	printf("%ld ", myarray[i]);
+	}
+	printf("\n");
+}
+ 
+	 
+ 
+/* function for printing array */
+/*void print_array(int myarray[MAXSIZE], int a_size) {
+	for (int i = 0; i < a_size; ++i) {
+	printf("%d ", myarray[i]);
+	}
+	printf("\n");
+}*/
+ 
+/* function for printing array containing longs */
+void print_array_l(long myarray[MAXSIZE], int a_size) {
+	for (int i = 0; i < a_size; ++i) {
+	printf("%ld ", myarray[i]);
+	}
+	printf("\n");
+}
+ 
+ 
+ 
+long find_max(long arr[], int n) {  
+   long max_element = arr[0];  
+   for(int i = 1; i<n; i++) {  
+      if(arr[i] > max_element)  
+         max_element = arr[i];  
+   }  
+   return max_element; 
+}
+ 
+void countingSort(long arr[], int n, long pos) 
+{      
+	// set the count array to all zeros before start   
+	memset(count, 0, sizeof(count));
+	// count howmany numbers are present with digit 0-9 at given position 
+	for (int i = 0; i < n; i++)  
+		count[(arr[i] / pos) % 10]++;  
+      
+	// now do prefix sum of the count array 
+	for (int i = 1; i < 10; i++)  
+		count[i] += count[i - 1];  
+  
+	// Place the elements in sorted order  
+	for (int i = n - 1; i >= 0; i--) {  
+		result[count[(arr[i] / pos) % 10] - 1] = arr[i];  
+		count[(arr[i] / pos) % 10]--;  
+	}  
+  
+	for (int i = 0; i < n; i++)  
+		arr[i] = result[i];  
+}
+ 
+void radixsort(long arr[], int n) {  
+	long max_element = find_max(arr, n);  
+	// counting sort from the least significant digit to the most significant digit  
+	for (long pos = 1; max_element / pos > 0; pos *= 10) {
+		countingSort(arr, n, pos);
+	}
+}

@@ -1,0 +1,37 @@
+C Code:
+
+#include <stdio.h>
+#include<string.h>
+#define ll long long
+int main(){
+	ll t;
+	scanf("%lld", &t);
+	while(t--){
+		ll n, i, j;
+		ll ar[123] = {0};
+		ll br[123] = {0};
+		scanf("%lld", &n);
+		char str1[n+1];
+		char str2[n+1];
+		scanf("%s", str1);
+		//fflush(stdin);
+		scanf("%s", str2);
+		
+		for(i = 0;i<n;i++){
+			ar[str2[i]]++;
+		}
+		for(i = 0;i<n;i++){
+			if(str1[i] != '?'){
+				br[str1[i]]++;
+			}
+		}
+		char strans[] = "Yes";
+		for(i = 97;i<=122;i++){
+			if(ar[i] < br[i]){
+				strcpy(strans, "No");
+				break;
+			}
+		}
+		printf("%s\n", strans);
+	}
+}

@@ -1,0 +1,39 @@
+C code:
+
+#include<stdio.h>
+int hcf(int a,int b){
+	int k;
+if(a>b){
+ k=a%b;
+ if(k==0)return b;
+ else return hcf(k,b);
+ 
+}else {
+	k=b%a;
+	if(k==0) return a;
+	return hcf(k,a);
+}
+}
+int main(){
+	int t,a,b,k,m;
+   long long int p ;
+	long int lcm; 
+	scanf("%d",&t); 
+	while(t>0){
+	scanf("%d %d",&a,&b);
+	k=hcf (a,b);
+	
+    p=a;
+    m=b;
+    while(m>1){
+        p=p+a;m--;
+    }
+     
+     lcm =p/k;
+     
+  printf("%ld %ld\n",(lcm/a),(lcm/b));
+	t--;	 
+	}
+ 
+ 
+}

@@ -1,0 +1,19 @@
+C Code:
+
+#include <stdio.h> 
+#include <math.h> 
+ 
+int main() 
+{ 
+int t, n, m, k; 
+scanf(" %d", &t); 
+ 
+for(int i = 0; i < t; i++) 
+{ 
+scanf(" %d %d %d", &n, &m, &k); 
+int res = (int)ceil((double)n / k) + (int)ceil((double)m / k); 
+printf("%d\n", res); 
+} 
+ 
+return 0; 
+}
