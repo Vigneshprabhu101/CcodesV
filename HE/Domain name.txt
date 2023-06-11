@@ -1,0 +1,61 @@
+C code:
+
+#include<stdio.h>
+#include<stdbool.h>
+#include<malloc.h>
+ 
+char* Solve (char* x) {
+    // Write your code here
+    //printf("%d %d",'A','a');
+    int tldstart=0;int labels=0;
+    if(strlen(x)>253){
+        return "false";
+    }
+ 
+    for(int i=0;i<strlen(x);i++){
+        if(x[i]=='.')
+        {
+            labels++;
+            tldstart=i+1;
+        }
+    }
+    if(strlen(x)-tldstart<2){
+        return "false";
+    }
+    if(tldstart<=1){
+        return "false";
+    }
+    for(int i=tldstart;i<strlen(x);i++){
+        if((x[i]<'a')||(x[i]>'z')){
+            if((x[i]<'A')||(x[i]>'Z')){
+                return "false";
+            }
+        }
+    }
+    //TLD
+ 
+    if(x[0]=='-'){return "false";}
+    for(int i=0;i<strlen(x)-1;i++){
+        if(x[i]=='.'){
+            if(x[i-1]=='-'){return "false";}
+            if(x[i+1]=='-'){return "false";}
+        }
+    }
+        
+    return "true";
+    
+}
+ 
+int main() {
+    int T;
+    scanf("%d", &T);
+    for(int t_i = 0; t_i < T; t_i++)
+    {
+        char* x = (char*)malloc(200000 * sizeof(char));
+        scanf("\n%[^\n]s", x);
+ 
+        char* out_ = Solve(x);
+        printf("%s", out_);
+        printf("\n");
+    }
+}
